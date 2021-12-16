@@ -7,4 +7,8 @@ public class QuestionNotFound extends RuntimeException {
         System.out.println("Question not found: " + questionId);
         this.questionId = questionId;
     }
+
+    public Long getQuestionId() {
+        return questionId;
+    }
 }
