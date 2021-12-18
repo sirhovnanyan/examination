@@ -5,6 +5,7 @@ import exam.entity.QuestionCreationParameters;
 import exam.exception.QuestionNotFound;
 import exam.properties.ConnectionParameters;
 import exam.utils.IOUtils;
+import exam.validation.Checks;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -34,6 +35,7 @@ public class DbQuestionService implements QuestionService {
 
     @Override
     public Long create(QuestionCreationParameters parameter) {
+        Checks.checkParameter(parameter);
         PreparedStatement statement = null;
 
         Connection connection = null;
@@ -62,6 +64,8 @@ public class DbQuestionService implements QuestionService {
 
     @Override
     public boolean update(Long id, QuestionCreationParameters parameter) {
+        Checks.checkId(id);
+        Checks.checkParameter(parameter);
         PreparedStatement statement = null;
         Connection connection = null;
         try {
@@ -84,6 +88,7 @@ public class DbQuestionService implements QuestionService {
 
     @Override
     public Optional<Question> findById(Long id) {
+        Checks.checkId(id);
         ResultSet resultSet = null;
         PreparedStatement statement = null;
         Connection connection = null;
@@ -112,6 +117,8 @@ public class DbQuestionService implements QuestionService {
 
     @Override
     public Collection<Question> search(String text, String answer) {
+        Checks.checkStr(text);
+        Checks.checkStr(answer);
         Collection<Question> questions = new ArrayList<>();
         ResultSet resultSet = null;
         PreparedStatement statement = null;

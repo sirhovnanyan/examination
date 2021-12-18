@@ -5,8 +5,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-public class Question extends QuestionCreationParameters {
+public class Question {
     private Long id;
+
+    private String text;
+
+    private String answer;
 
     private LocalDateTime createdOn;
 
@@ -14,15 +18,17 @@ public class Question extends QuestionCreationParameters {
 
 
     public Question(Long id, String text, String answer) {
-        super(text, answer);
         this.id = id;
+        this.text = text;
+        this.answer = answer;
         this.createdOn = LocalDateTime.now();
         this.updatedOn = null;
     }
 
     public Question(ResultSet resultSet) throws SQLException {
-        super(resultSet.getString("text"), resultSet.getString("answer"));
         this.id = resultSet.getLong("id");
+        this.text = resultSet.getString("text");
+        this.answer = resultSet.getString("answer");
         this.createdOn = resultSet.getTimestamp("created_on").toLocalDateTime();
 
         Timestamp updatedOn = resultSet.getTimestamp("updated_on");
@@ -43,6 +49,14 @@ public class Question extends QuestionCreationParameters {
         return updatedOn;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -53,5 +67,13 @@ public class Question extends QuestionCreationParameters {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }

@@ -3,6 +3,7 @@ package exam.questionservice;
 import exam.entity.Question;
 import exam.entity.QuestionCreationParameters;
 import exam.exception.QuestionNotFound;
+import exam.validation.Checks;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -20,6 +21,7 @@ public class HashMapQuestionServiceImpl implements QuestionService {
 
     @Override
     public Long create(QuestionCreationParameters parameter) {
+        Checks.checkParameter(parameter);
         id++;
         data.put(id, new Question(id, parameter.getText(), parameter.getAnswer()));
         return id;
@@ -27,6 +29,8 @@ public class HashMapQuestionServiceImpl implements QuestionService {
 
     @Override
     public boolean update(Long id, QuestionCreationParameters parameter) {
+        Checks.checkId(id);
+        Checks.checkParameter(parameter);
         Question question;
         if ((question = data.get(id)) != null) {
             question.setText(parameter.getText());
@@ -39,6 +43,7 @@ public class HashMapQuestionServiceImpl implements QuestionService {
 
     @Override
     public Optional<Question> findById(Long id) {
+        Checks.checkId(id);
         Question question;
         if ((question = data.get(id)) != null) {
             return Optional.of(question);
@@ -53,6 +58,8 @@ public class HashMapQuestionServiceImpl implements QuestionService {
 
     @Override
     public Collection<Question> search(String text, String answer) {
+        Checks.checkStr(text);
+        Checks.checkStr(answer);
         Collection<Question> questions = new ArrayList<>();
         Question question;
         for (long i : data.keySet()) {
@@ -64,4 +71,5 @@ public class HashMapQuestionServiceImpl implements QuestionService {
         }
         return questions;
     }
+
 }
