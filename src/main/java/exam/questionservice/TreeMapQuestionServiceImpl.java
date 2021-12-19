@@ -63,7 +63,9 @@ public class TreeMapQuestionServiceImpl implements QuestionService {
     public Collection<Question> search(String text, String answer) {
         Checks.checkStr(text);
         Checks.checkStr(answer);
+
         Collection<Question> questions = new ArrayList<>();
+
         for (Question question : data.keySet()) {
             if (question.getText().equals(text) ||
                     question.getAnswer().equals(answer)) {
